@@ -18,6 +18,7 @@ class WorkoutViewController: UIViewController, UITextFieldDelegate, UINavigation
     @IBOutlet weak var textView: UITextView!
     
     let dateFormatter = NSDateFormatter()
+    let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
     /*
         This value is either passed by `WorkoutTableViewController` in `prepareForSegue(_:sender:)`
@@ -115,7 +116,9 @@ class WorkoutViewController: UIViewController, UITextFieldDelegate, UINavigation
             let workoutDesc = textView.text
             
             // Set the workout to be passed to WorkoutListTableViewController after the unwind segue.
-            workout = Workout(name: name, date: date, workoutDesc: workoutDesc)
+            workout!.name = name
+            workout!.date = date
+            workout?.workoutDesc = workoutDesc
         }
     }
     

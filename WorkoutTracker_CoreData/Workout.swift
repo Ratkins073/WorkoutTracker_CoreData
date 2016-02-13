@@ -7,26 +7,14 @@
 //
 
 import UIKit
+import CoreData
 
-class Workout: NSObject, NSCoding {
+class Workout: NSManagedObject {
     // MARK: Properties
     
-    var name: String
-    var date: NSDate
-    var workoutDesc: String
-    
-    // MARK: Archiving Paths
-    
-    static let DocumentsDirectory = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
-    static let ArchiveURL = DocumentsDirectory.URLByAppendingPathComponent("workouts")
-    
-    // MARK: Types
-    
-    struct PropertyKey {
-        static let nameKey = "name"
-        static let dateKey = "date"
-        static let workoutDescKey = "workoutDesc"
-    }
+    @NSManaged var name: String
+    @NSManaged var date: NSDate
+    @NSManaged var workoutDesc: String
     
     // MARK: Comparisons
     
@@ -44,36 +32,12 @@ class Workout: NSObject, NSCoding {
 
     // MARK: Initialization
     
-    init?(name: String, date: NSDate, workoutDesc: String) {
-        // Initialize stored properties.
-        self.name = name
-        self.workoutDesc = workoutDesc
-        self.date = date
+    class func createInManagedObjectContext(moc: NSManagedObjectContext, name: String, date: NSDate, workoutDesc: String) -> Workout {
+        let newWorkout = NSEntityDescription.insertNewObjectForEntityForName("Workout", inManagedObjectContext: moc) as! Workout
+        newWorkout.name = name
+        newWorkout.date = date
+        newWorkout.workoutDesc = workoutDesc
         
-        super.init()
-        
-        // Initialization should fail if there is no name or if the rating is negative.
-        if name.isEmpty || workoutDesc.isEmpty {
-            return nil
-        }
-    }
-    
-    // MARK: NSCoding
-    
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(name, forKey: PropertyKey.nameKey)
-        aCoder.encodeObject(date, forKey: PropertyKey.dateKey)
-        aCoder.encodeObject(workoutDesc, forKey: PropertyKey.workoutDescKey)
-    }
-    
-    required convenience init?(coder aDecoder: NSCoder) {
-        let name = aDecoder.decodeObjectForKey(PropertyKey.nameKey) as! String
-        
-        let date = aDecoder.decodeObjectForKey(PropertyKey.dateKey) as! NSDate
-        
-        let workoutDesc = aDecoder.decodeObjectForKey(PropertyKey.workoutDescKey) as! String
-        
-        // Must call designated initializer.
-        self.init(name: name, date: date, workoutDesc: workoutDesc)
+        return newWorkout
     }
 }

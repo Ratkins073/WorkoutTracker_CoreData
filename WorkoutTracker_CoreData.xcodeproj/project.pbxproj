@@ -13,10 +13,10 @@
 		3F6459991C67E27600254211 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F6459981C67E27600254211 /* Assets.xcassets */; };
 		3F64599C1C67E27600254211 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F64599A1C67E27600254211 /* LaunchScreen.storyboard */; };
 		3F6459A71C67E27600254211 /* WorkoutTracker_CoreDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6459A61C67E27600254211 /* WorkoutTracker_CoreDataTests.swift */; };
-		3F6459B71C67E2EB00254211 /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6459B21C67E2EB00254211 /* Workout.swift */; };
 		3F6459B81C67E2EB00254211 /* WorkoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6459B31C67E2EB00254211 /* WorkoutTableViewCell.swift */; };
 		3F6459B91C67E2EB00254211 /* WorkoutTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6459B41C67E2EB00254211 /* WorkoutTableViewController.swift */; };
 		3F6459BA1C67E2EB00254211 /* WorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6459B51C67E2EB00254211 /* WorkoutViewController.swift */; };
+		3F6459EF1C698BED00254211 /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6459ED1C698BED00254211 /* Workout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,10 +40,10 @@
 		3F6459A21C67E27600254211 /* WorkoutTracker_CoreDataTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WorkoutTracker_CoreDataTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F6459A61C67E27600254211 /* WorkoutTracker_CoreDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutTracker_CoreDataTests.swift; sourceTree = "<group>"; };
 		3F6459A81C67E27600254211 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3F6459B21C67E2EB00254211 /* Workout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Workout.swift; path = WorkoutTracker_CoreData/Workout.swift; sourceTree = "<group>"; };
-		3F6459B31C67E2EB00254211 /* WorkoutTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkoutTableViewCell.swift; path = WorkoutTracker_CoreData/WorkoutTableViewCell.swift; sourceTree = "<group>"; };
-		3F6459B41C67E2EB00254211 /* WorkoutTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkoutTableViewController.swift; path = WorkoutTracker_CoreData/WorkoutTableViewController.swift; sourceTree = "<group>"; };
-		3F6459B51C67E2EB00254211 /* WorkoutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkoutViewController.swift; path = WorkoutTracker_CoreData/WorkoutViewController.swift; sourceTree = "<group>"; };
+		3F6459B31C67E2EB00254211 /* WorkoutTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutTableViewCell.swift; sourceTree = "<group>"; };
+		3F6459B41C67E2EB00254211 /* WorkoutTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutTableViewController.swift; sourceTree = "<group>"; };
+		3F6459B51C67E2EB00254211 /* WorkoutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutViewController.swift; sourceTree = "<group>"; };
+		3F6459ED1C698BED00254211 /* Workout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,10 +67,6 @@
 		3F6459821C67E27600254211 = {
 			isa = PBXGroup;
 			children = (
-				3F6459B21C67E2EB00254211 /* Workout.swift */,
-				3F6459B31C67E2EB00254211 /* WorkoutTableViewCell.swift */,
-				3F6459B41C67E2EB00254211 /* WorkoutTableViewController.swift */,
-				3F6459B51C67E2EB00254211 /* WorkoutViewController.swift */,
 				3F64598D1C67E27600254211 /* WorkoutTracker_CoreData */,
 				3F6459A51C67E27600254211 /* WorkoutTracker_CoreDataTests */,
 				3F64598C1C67E27600254211 /* Products */,
@@ -89,12 +85,16 @@
 		3F64598D1C67E27600254211 /* WorkoutTracker_CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				3F6459B31C67E2EB00254211 /* WorkoutTableViewCell.swift */,
+				3F6459B41C67E2EB00254211 /* WorkoutTableViewController.swift */,
+				3F6459B51C67E2EB00254211 /* WorkoutViewController.swift */,
 				3F64598E1C67E27600254211 /* AppDelegate.swift */,
 				3F6459921C67E27600254211 /* Main.storyboard */,
 				3F6459981C67E27600254211 /* Assets.xcassets */,
 				3F64599A1C67E27600254211 /* LaunchScreen.storyboard */,
 				3F64599D1C67E27600254211 /* Info.plist */,
 				3F6459951C67E27600254211 /* WorkoutTracker_CoreData.xcdatamodeld */,
+				3F6459ED1C698BED00254211 /* Workout.swift */,
 			);
 			path = WorkoutTracker_CoreData;
 			sourceTree = "<group>";
@@ -212,11 +212,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F6459971C67E27600254211 /* WorkoutTracker_CoreData.xcdatamodeld in Sources */,
+				3F6459EF1C698BED00254211 /* Workout.swift in Sources */,
 				3F6459BA1C67E2EB00254211 /* WorkoutViewController.swift in Sources */,
 				3F6459B91C67E2EB00254211 /* WorkoutTableViewController.swift in Sources */,
 				3F64598F1C67E27600254211 /* AppDelegate.swift in Sources */,
 				3F6459B81C67E2EB00254211 /* WorkoutTableViewCell.swift in Sources */,
-				3F6459B71C67E2EB00254211 /* Workout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -349,6 +349,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ratkinsCreations.WorkoutTracker-CoreData";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -360,6 +361,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ratkinsCreations.WorkoutTracker-CoreData";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
