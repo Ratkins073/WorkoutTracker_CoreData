@@ -166,6 +166,8 @@ class WorkoutTableViewController: UITableViewController {
         }
     }
     
+    
+    // MARK: Core Data
     func loadWorkouts() -> [Workout]? {
         var loaded = [Workout]()
         let fetchRequest = NSFetchRequest(entityName: "Workout")
