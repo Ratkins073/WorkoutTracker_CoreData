@@ -15,13 +15,14 @@ class WorkoutTableViewController: UITableViewController {
     var workouts = [Workout]()
     let dateFormatter = NSDateFormatter()
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    let rowHeight: CGFloat = 55
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Use the edit button item provided by the table view controller.
         navigationItem.leftBarButtonItem = editButtonItem()
-        
+        //self.navigationController?.navigationBar.barTintColor = UIColor.orangeColor()
         // Load any saved workouts, otherwise load sample data.
         let savedWorkouts = loadWorkouts()!
         if savedWorkouts.count != 0 {
@@ -72,7 +73,13 @@ class WorkoutTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return workouts.count
     }
+    
+    // Sets the row height in the tableView
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return rowHeight
+    }
 
+    // Configures the tableView cell
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         // Table view cells are reused and should be dequeued using a cell identifier.
@@ -96,7 +103,6 @@ class WorkoutTableViewController: UITableViewController {
         // Return false if you do not want the specified item to be editable.
         return true
     }
-    
 
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
