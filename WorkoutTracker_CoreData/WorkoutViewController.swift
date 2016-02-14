@@ -29,6 +29,8 @@ class WorkoutViewController: UIViewController, UITextFieldDelegate, UINavigation
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
+        
         // Handle the text field’s user input through delegate callbacks.
         nameTextField.delegate = self
         dateTextField.delegate = self
@@ -118,9 +120,13 @@ class WorkoutViewController: UIViewController, UITextFieldDelegate, UINavigation
             let workoutDesc = textView.text
             
             // Set the workout to be passed to WorkoutListTableViewController after the unwind segue.
-            workout!.name = name
-            workout!.date = date
-            workout?.workoutDesc = workoutDesc
+            if workout !== nil {
+                workout!.name = name
+                workout!.date = date
+                workout?.workoutDesc = workoutDesc
+            } else {
+                workout = Workout.createInManagedObjectContext(managedObjectContext, name: name, date: date, workoutDesc: workoutDesc)
+            }
         }
     }
     
