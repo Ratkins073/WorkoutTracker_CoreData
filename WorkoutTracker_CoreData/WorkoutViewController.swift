@@ -57,6 +57,8 @@ class WorkoutViewController: UIViewController, UITextFieldDelegate, UINavigation
         let dateText = dateTextField.text ?? ""
         if !dateText.isEmpty && !nameText.isEmpty {
             saveButton.enabled = true
+        } else {
+            saveButton.enabled = false
         }
     }
     
@@ -76,10 +78,7 @@ class WorkoutViewController: UIViewController, UITextFieldDelegate, UINavigation
     }
 
     func textFieldDidBeginEditing(textField: UITextField) {
-        /*
-        // Disable the Save button while editing.
-        saveButton.enabled = false
-        */
+        
     }
     
     // MARK: datePickerView
