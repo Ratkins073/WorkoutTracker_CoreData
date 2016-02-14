@@ -37,6 +37,9 @@ class WorkoutViewController: UIViewController, UITextFieldDelegate, UINavigation
         scrollView.delegate = self
         dateFormatter.dateStyle = NSDateFormatterStyle.LongStyle
         
+        //saveButton.tintColor = UIColor.whiteColor()
+        
+        
         // Set up views if editing an existing Workout.
         if let workout = workout {
             navigationItem.title = workout.name

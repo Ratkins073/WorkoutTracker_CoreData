@@ -21,8 +21,11 @@ class WorkoutTableViewController: UITableViewController {
         super.viewDidLoad()
         
         // Use the edit button item provided by the table view controller.
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
         navigationItem.leftBarButtonItem = editButtonItem()
-        //self.navigationController?.navigationBar.barTintColor = UIColor.orangeColor()
+        navigationItem.leftBarButtonItem?.tintColor = UIColor.whiteColor()
+        
+        
         // Load any saved workouts, otherwise load sample data.
         let savedWorkouts = loadWorkouts()!
         if savedWorkouts.count != 0 {
