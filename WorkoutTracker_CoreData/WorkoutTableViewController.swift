@@ -124,23 +124,23 @@ class WorkoutTableViewController: UITableViewController, UISearchResultsUpdating
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
-        return true
+        if self.searchController.active {
+            return false
+        } else {
+            return true
+        }
     }
 
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             
-            if self.searchController.active {
+            // Delete the row from the data source
+            managedObjectContext.deleteObject(workouts[indexPath.row])
+            workouts.removeAtIndex(indexPath.row)
                 
-            } else {
-                // Delete the row from the data source
-                managedObjectContext.deleteObject(workouts[indexPath.row])
-                workouts.removeAtIndex(indexPath.row)
-                
-                // Remove the deleted row from the tableView
-                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-            }
+            // Remove the deleted row from the tableView
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         }
     }
     
