@@ -9,13 +9,15 @@
 import UIKit
 import CoreData
 
-class WorkoutTableViewController: UITableViewController {
+class WorkoutTableViewController: UITableViewController, UISearchResultsUpdating {
     // MARK: Properties
     
     var workouts = [Workout]()
+    var filteredWorkouts = [Workout]()
     let dateFormatter = NSDateFormatter()
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     let rowHeight: CGFloat = 55
+    var searchController = UISearchController(searchResultsController: nil)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +26,7 @@ class WorkoutTableViewController: UITableViewController {
         self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
         navigationItem.leftBarButtonItem = editButtonItem()
         navigationItem.leftBarButtonItem?.tintColor = UIColor.whiteColor()
-        
+        self.definesPresentationContext = true
         
         // Load any saved workouts, otherwise load sample data.
         let savedWorkouts = loadWorkouts()!
@@ -36,6 +38,15 @@ class WorkoutTableViewController: UITableViewController {
         }
         // Sort the workouts by date
         sortWorkoutsByDate()
+        
+        self.searchController.searchResultsUpdater = self
+        self.searchController.dimsBackgroundDuringPresentation = false
+        self.searchController.searchBar.sizeToFit()
+            
+        self.tableView.tableHeaderView = searchController.searchBar
+        
+        // Reload the table
+        self.tableView.reloadData()
     }
     
     func sortWorkoutsByDate() {
@@ -74,7 +85,11 @@ class WorkoutTableViewController: UITableViewController {
     
     // Sets the number rows in the tableView
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return workouts.count
+        if self.searchController.active {
+            return filteredWorkouts.count
+        } else {
+            return workouts.count
+        }
     }
     
     // Sets the row height in the tableView
@@ -91,13 +106,18 @@ class WorkoutTableViewController: UITableViewController {
         
         // Set dateStyle
         dateFormatter.dateStyle = NSDateFormatterStyle.LongStyle
+        if self.searchController.active {
+            let workout = filteredWorkouts[indexPath.row]
+            
+            cell.nameLabel.text = workout.name
+            cell.dateLabel.text = dateFormatter.stringFromDate(workout.date)
+        } else {
+            // Fetches the appropriate workout for the data source layout.
+            let workout = workouts[indexPath.row]
         
-        // Fetches the appropriate workout for the data source layout.
-        let workout = workouts[indexPath.row]
-        
-        cell.nameLabel.text = workout.name
-        cell.dateLabel.text = dateFormatter.stringFromDate(workout.date)
-        
+            cell.nameLabel.text = workout.name
+            cell.dateLabel.text = dateFormatter.stringFromDate(workout.date)
+        }
         return cell
     }
 
@@ -111,12 +131,16 @@ class WorkoutTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             
-            // Delete the row from the data source
-            managedObjectContext.deleteObject(workouts[indexPath.row])
-            workouts.removeAtIndex(indexPath.row)
-            
-            // Remove the deleted row from the tableView
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            if self.searchController.active {
+                
+            } else {
+                // Delete the row from the data source
+                managedObjectContext.deleteObject(workouts[indexPath.row])
+                workouts.removeAtIndex(indexPath.row)
+                
+                // Remove the deleted row from the tableView
+                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            }
         }
     }
     
@@ -130,8 +154,13 @@ class WorkoutTableViewController: UITableViewController {
             // Get the cell that generated this segue.
             if let selectedWorkoutCell = sender as? WorkoutTableViewCell {
                 let indexPath = tableView.indexPathForCell(selectedWorkoutCell)!
-                let selectedWorkout = workouts[indexPath.row]
-                workoutDetailViewController.workout = selectedWorkout
+                if self.searchController.active {
+                    let selectedWorkout = filteredWorkouts[indexPath.row]
+                    workoutDetailViewController.workout = selectedWorkout
+                } else {
+                    let selectedWorkout = workouts[indexPath.row]
+                    workoutDetailViewController.workout = selectedWorkout
+                }
             }
         }
     }
@@ -171,6 +200,23 @@ class WorkoutTableViewController: UITableViewController {
         }
     }
     
+    // MARK: UISearchResultsUpdating
+    func updateSearchResultsForSearchController(searchController: UISearchController)
+    {
+        filteredWorkouts.removeAll(keepCapacity: false)
+        
+        let searchPredicate = NSPredicate(format: "workoutDesc CONTAINS[c] %@", searchController.searchBar.text!)
+        let fetchRequest = NSFetchRequest(entityName: "Workout")
+        fetchRequest.predicate = searchPredicate
+        do {
+            let results = try managedObjectContext.executeFetchRequest(fetchRequest) as! [Workout]
+            filteredWorkouts = results
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
+        
+        self.tableView.reloadData()
+    }
     
     // MARK: Core Data
     func loadWorkouts() -> [Workout]? {
